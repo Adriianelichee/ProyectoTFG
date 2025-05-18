@@ -1,13 +1,13 @@
 package com.adri.proyectotfg.Domain.Repository;
 
-import com.adri.proyectotfg.Domain.Entity.Service;
+import com.adri.proyectotfg.Domain.Entity.Services;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ServiceRepository {
-    Service save(Service service);
-    Optional<Service> findById(Integer id);
-    List<Service> findAll();
+    Services save(Services services);
+    Optional<Services> findById(Integer id);
+    List<Services> findAll();
     void deleteById(Integer id);
 }

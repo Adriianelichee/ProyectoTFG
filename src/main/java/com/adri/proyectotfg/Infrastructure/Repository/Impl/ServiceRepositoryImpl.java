@@ -1,11 +1,7 @@
 package com.adri.proyectotfg.Infrastructure.Repository.Impl;
 
-import com.adri.proyectotfg.Domain.Entity.Reservation;
-import com.adri.proyectotfg.Domain.Entity.ReservationStatus;
-import com.adri.proyectotfg.Domain.Entity.Service;
-import com.adri.proyectotfg.Domain.Repository.ReservationRepository;
+import com.adri.proyectotfg.Domain.Entity.Services;
 import com.adri.proyectotfg.Domain.Repository.ServiceRepository;
-import com.adri.proyectotfg.Infrastructure.Repository.Jpa.ReservationJpaRepository;
 import com.adri.proyectotfg.Infrastructure.Repository.Jpa.ServiceJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -19,17 +15,17 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     private final ServiceJpaRepository jpa;
 
     @Override
-    public Service save(Service service) {
-        return jpa.save(service);
+    public Services save(Services services) {
+        return jpa.save(services);
     }
 
     @Override
-    public Optional<Service> findById(Integer id) {
+    public Optional<Services> findById(Integer id) {
         return jpa.findById(id);
     }
 
     @Override
-    public List<Service> findAll() {
+    public List<Services> findAll() {
         return jpa.findAll();
     }
 
