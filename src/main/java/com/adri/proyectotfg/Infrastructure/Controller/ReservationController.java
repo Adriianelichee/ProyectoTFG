@@ -6,6 +6,7 @@ import com.adri.proyectotfg.Infrastructure.Dto.In.PaymentInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.In.ReservationInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.PaymentOutDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.ReservationOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ReservationController {
     private final ReservationService service;
 
     @PostMapping
-    public ResponseEntity<ReservationOutDto> create(@RequestBody ReservationInDto dto) {
+    public ResponseEntity<ReservationOutDto> create(@Valid @RequestBody ReservationInDto dto) {
         return ResponseEntity.ok(service.createReservation(dto));
     }
 
@@ -45,7 +46,7 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationOutDto> update(@PathVariable Integer id, @RequestBody ReservationInDto dto) {
+    public ResponseEntity<ReservationOutDto> update(@PathVariable Integer id,@Valid @RequestBody ReservationInDto dto) {
         return ResponseEntity.ok(service.updateReservation(id, dto));
     }
 

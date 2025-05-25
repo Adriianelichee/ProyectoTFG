@@ -6,6 +6,7 @@ import com.adri.proyectotfg.Infrastructure.Dto.In.LoginRequest;
 import com.adri.proyectotfg.Infrastructure.Dto.In.UserInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.UserOutDto;
 import com.adri.proyectotfg.Infrastructure.Security.JwtTokenProvider;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,7 +26,7 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginRequest request) {
         Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
@@ -34,7 +35,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserOutDto> register(@RequestBody UserInDto dto) {
+    public ResponseEntity<UserOutDto> register(@Valid @RequestBody UserInDto dto) {
         // encode password
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
         UserOutDto created = userService.createUser(dto);

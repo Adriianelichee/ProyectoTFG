@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.PaymentService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.PaymentInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.PaymentOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class PaymentController {
     private final PaymentService service;
 
     @PostMapping
-    public ResponseEntity<PaymentOutDto> create(@RequestBody PaymentInDto dto) {
+    public ResponseEntity<PaymentOutDto> create(@Valid @RequestBody PaymentInDto dto) {
         return ResponseEntity.ok(service.createPayment(dto));
     }
 
@@ -37,7 +38,7 @@ public class PaymentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentOutDto> update(@PathVariable Integer id, @RequestBody PaymentInDto dto) {
+    public ResponseEntity<PaymentOutDto> update(@PathVariable Integer id,@Valid @RequestBody PaymentInDto dto) {
         return ResponseEntity.ok(service.updatePayment(id, dto));
     }
 

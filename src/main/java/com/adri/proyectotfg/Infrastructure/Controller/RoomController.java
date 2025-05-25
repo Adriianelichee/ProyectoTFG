@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.RoomService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.RoomInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.RoomOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ class RoomController {
     private final RoomService service;
 
     @PostMapping
-    public ResponseEntity<RoomOutDto> create(@RequestBody RoomInDto dto) {
+    public ResponseEntity<RoomOutDto> create(@Valid @RequestBody RoomInDto dto) {
         return ResponseEntity.ok(service.createRoom(dto));
     }
 
@@ -37,7 +38,7 @@ class RoomController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomOutDto> update(@PathVariable Integer id, @RequestBody RoomInDto dto) {
+    public ResponseEntity<RoomOutDto> update(@PathVariable Integer id,@Valid @RequestBody RoomInDto dto) {
         return ResponseEntity.ok(service.updateRoom(id, dto));
     }
 

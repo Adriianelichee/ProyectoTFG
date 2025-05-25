@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.UserService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.UserInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.UserOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +38,7 @@ class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserOutDto> update(@PathVariable Integer id, @RequestBody UserInDto dto) {
+    public ResponseEntity<UserOutDto> update(@PathVariable Integer id,@Valid @RequestBody UserInDto dto) {
         return ResponseEntity.ok(service.updateUser(id, dto));
     }
 

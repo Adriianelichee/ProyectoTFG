@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.ReportService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.ReportInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.ReportOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ReportController {
     private final ReportService service;
 
     @PostMapping
-    public ResponseEntity<ReportOutDto> create(@RequestBody ReportInDto dto) {
+    public ResponseEntity<ReportOutDto> create(@Valid @RequestBody ReportInDto dto) {
         return ResponseEntity.ok(service.createReport(dto));
     }
 
@@ -37,7 +38,7 @@ public class ReportController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReportOutDto> update(@PathVariable Integer id, @RequestBody ReportInDto dto) {
+    public ResponseEntity<ReportOutDto> update(@PathVariable Integer id,@Valid @RequestBody ReportInDto dto) {
         return ResponseEntity.ok(service.updateReport(id, dto));
     }
 

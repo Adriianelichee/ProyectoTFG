@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.WorkstationService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.WorkstationInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.WorkstationOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ class WorkstationController {
     private final WorkstationService service;
 
     @PostMapping
-    public ResponseEntity<WorkstationOutDto> create(@RequestBody WorkstationInDto dto) {
+    public ResponseEntity<WorkstationOutDto> create(@Valid @RequestBody WorkstationInDto dto) {
         return ResponseEntity.ok(service.createWorkstation(dto));
     }
 
@@ -37,7 +38,7 @@ class WorkstationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WorkstationOutDto> update(@PathVariable Integer id, @RequestBody WorkstationInDto dto) {
+    public ResponseEntity<WorkstationOutDto> update(@PathVariable Integer id,@Valid @RequestBody WorkstationInDto dto) {
         return ResponseEntity.ok(service.updateWorkstation(id, dto));
     }
 

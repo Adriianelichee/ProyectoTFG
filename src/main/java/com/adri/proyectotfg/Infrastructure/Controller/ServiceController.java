@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.ServicesService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.ServiceInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.ServiceOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ServiceController {
     private final ServicesService service;
 
     @PostMapping
-    public ResponseEntity<ServiceOutDto> create(@RequestBody ServiceInDto dto) {
+    public ResponseEntity<ServiceOutDto> create(@Valid @RequestBody ServiceInDto dto) {
         return ResponseEntity.ok(service.createService(dto));
     }
 
@@ -32,7 +33,7 @@ public class ServiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ServiceOutDto> update(@PathVariable Integer id, @RequestBody ServiceInDto dto) {
+    public ResponseEntity<ServiceOutDto> update(@PathVariable Integer id,@Valid @RequestBody ServiceInDto dto) {
         return ResponseEntity.ok(service.updateService(id, dto));
     }
 

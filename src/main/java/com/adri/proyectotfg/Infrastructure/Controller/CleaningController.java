@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.CleaningService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.CleaningInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.CleaningOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class CleaningController {
     private final CleaningService service;
 
     @PostMapping
-    public ResponseEntity<CleaningOutDto> create(@RequestBody CleaningInDto dto) {
+    public ResponseEntity<CleaningOutDto> create(@Valid @RequestBody CleaningInDto dto) {
         return ResponseEntity.ok(service.createCleaning(dto));
     }
 
@@ -37,7 +38,7 @@ public class CleaningController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CleaningOutDto> update(@PathVariable Integer id, @RequestBody CleaningInDto dto) {
+    public ResponseEntity<CleaningOutDto> update(@PathVariable Integer id, @Valid @RequestBody CleaningInDto dto) {
         return ResponseEntity.ok(service.updateCleaning(id, dto));
     }
 

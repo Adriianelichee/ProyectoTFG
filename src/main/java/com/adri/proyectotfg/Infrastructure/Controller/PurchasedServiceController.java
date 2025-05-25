@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.PurchasedServicesService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.PurchasedServiceInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.PurchasedServiceOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class PurchasedServiceController {
     private final PurchasedServicesService service;
 
     @PostMapping
-    public ResponseEntity<PurchasedServiceOutDto> create(@RequestBody PurchasedServiceInDto dto) {
+    public ResponseEntity<PurchasedServiceOutDto> create(@Valid @RequestBody PurchasedServiceInDto dto) {
         return ResponseEntity.ok(service.createPurchasedService(dto));
     }
 
@@ -37,7 +38,7 @@ public class PurchasedServiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PurchasedServiceOutDto> update(@PathVariable Integer id, @RequestBody PurchasedServiceInDto dto) {
+    public ResponseEntity<PurchasedServiceOutDto> update(@PathVariable Integer id, @Valid @RequestBody PurchasedServiceInDto dto) {
         return ResponseEntity.ok(service.updatePurchasedService(id, dto));
     }
 

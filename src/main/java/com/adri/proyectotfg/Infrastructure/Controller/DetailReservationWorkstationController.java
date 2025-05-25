@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.DetailReservationWorkstationService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.DetailReservationWorkstationInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.DetailReservationWorkstationOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class DetailReservationWorkstationController {
     private final DetailReservationWorkstationService service;
 
     @PostMapping
-    public ResponseEntity<DetailReservationWorkstationOutDto> create(@RequestBody DetailReservationWorkstationInDto dto) {
+    public ResponseEntity<DetailReservationWorkstationOutDto> create(@Valid @RequestBody DetailReservationWorkstationInDto dto) {
         return ResponseEntity.ok(service.createDetail(dto));
     }
 
@@ -32,7 +33,7 @@ public class DetailReservationWorkstationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DetailReservationWorkstationOutDto> update(@PathVariable Integer id, @RequestBody DetailReservationWorkstationInDto dto) {
+    public ResponseEntity<DetailReservationWorkstationOutDto> update(@PathVariable Integer id,@Valid @RequestBody DetailReservationWorkstationInDto dto) {
         return ResponseEntity.ok(service.updateDetail(id, dto));
     }
 

@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.FloorService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.FloorInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.FloorOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class FloorController {
     private final FloorService service;
 
     @PostMapping
-    public ResponseEntity<FloorOutDto> create(@RequestBody FloorInDto dto) {
+    public ResponseEntity<FloorOutDto> create(@Valid @RequestBody FloorInDto dto) {
         return ResponseEntity.ok(service.createFloor(dto));
     }
 
@@ -32,7 +33,7 @@ public class FloorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FloorOutDto> update(@PathVariable Integer id, @RequestBody FloorInDto dto) {
+    public ResponseEntity<FloorOutDto> update(@PathVariable Integer id,@Valid @RequestBody FloorInDto dto) {
         return ResponseEntity.ok(service.updateFloor(id, dto));
     }
 

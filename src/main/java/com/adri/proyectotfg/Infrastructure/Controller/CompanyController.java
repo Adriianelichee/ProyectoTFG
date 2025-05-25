@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Infrastructure.Controller;
 import com.adri.proyectotfg.Application.Service.CompanyService;
 import com.adri.proyectotfg.Infrastructure.Dto.In.CompanyInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.CompanyOutDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ class CompanyController {
     private final CompanyService service;
 
     @PostMapping
-    public ResponseEntity<CompanyOutDto> create(@RequestBody CompanyInDto dto) {
+    public ResponseEntity<CompanyOutDto> create(@Valid @RequestBody CompanyInDto dto) {
         return ResponseEntity.ok(service.createCompany(dto));
     }
 
@@ -32,7 +33,7 @@ class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CompanyOutDto> update(@PathVariable Integer id, @RequestBody CompanyInDto dto) {
+    public ResponseEntity<CompanyOutDto> update(@PathVariable Integer id, @Valid @RequestBody CompanyInDto dto) {
         return ResponseEntity.ok(service.updateCompany(id, dto));
     }
 
