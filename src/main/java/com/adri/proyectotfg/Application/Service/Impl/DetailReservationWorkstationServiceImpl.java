@@ -1,8 +1,6 @@
 package com.adri.proyectotfg.Application.Service.Impl;
 
-import com.adri.proyectotfg.Application.Mapper.DetailReservationRoomMapper;
 import com.adri.proyectotfg.Application.Mapper.DetailReservationWorkstationMapper;
-import com.adri.proyectotfg.Application.Service.DetailReservationRoomService;
 import com.adri.proyectotfg.Application.Service.DetailReservationWorkstationService;
 import com.adri.proyectotfg.Domain.Entity.DetailReservationWorkstation;
 import com.adri.proyectotfg.Domain.Repository.DetailReservationWorkstationRepository;
@@ -11,6 +9,7 @@ import com.adri.proyectotfg.Infrastructure.Dto.Out.DetailReservationWorkstationO
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,4 +50,19 @@ public class DetailReservationWorkstationServiceImpl implements DetailReservatio
     public void deleteDetail(Integer id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<DetailReservationWorkstationOutDto> getDetailsByWorkstation(Integer workstationId) {
+        return repository.findByWorkstationWorkstationId(workstationId).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DetailReservationWorkstationOutDto> getOccupiedWorkstationDetailsBetweenDates(LocalDateTime start, LocalDateTime end) {
+        return repository.findActiveReservationDetailsBetweenDates(start, end).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 }

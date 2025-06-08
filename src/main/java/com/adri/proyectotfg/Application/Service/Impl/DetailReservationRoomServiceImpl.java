@@ -1,21 +1,15 @@
 package com.adri.proyectotfg.Application.Service.Impl;
 
 import com.adri.proyectotfg.Application.Mapper.DetailReservationRoomMapper;
-import com.adri.proyectotfg.Application.Mapper.ReservationMapper;
 import com.adri.proyectotfg.Application.Service.DetailReservationRoomService;
-import com.adri.proyectotfg.Application.Service.ReservationService;
 import com.adri.proyectotfg.Domain.Entity.DetailReservationRoom;
-import com.adri.proyectotfg.Domain.Entity.Reservation;
-import com.adri.proyectotfg.Domain.Entity.ReservationStatus;
 import com.adri.proyectotfg.Domain.Repository.DetailReservationRoomRepository;
-import com.adri.proyectotfg.Domain.Repository.ReservationRepository;
 import com.adri.proyectotfg.Infrastructure.Dto.In.DetailReservationRoomInDto;
-import com.adri.proyectotfg.Infrastructure.Dto.In.ReservationInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.DetailReservationRoomOutDto;
-import com.adri.proyectotfg.Infrastructure.Dto.Out.ReservationOutDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,5 +49,26 @@ public class DetailReservationRoomServiceImpl implements DetailReservationRoomSe
     @Override
     public void deleteDetail(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<DetailReservationRoomOutDto> getOccupiedRoomDetails() {
+        return repository.findActiveReservationDetails(LocalDateTime.now()).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DetailReservationRoomOutDto> getOccupiedRoomDetailsByRoom(Integer roomId) {
+        return repository.findActiveReservationDetailsByRoom(roomId, LocalDateTime.now()).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DetailReservationRoomOutDto> getOccupiedRoomDetailsBetweenDates(LocalDateTime start, LocalDateTime end) {
+        return repository.findActiveReservationDetailsBetweenDates(start, end).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 }

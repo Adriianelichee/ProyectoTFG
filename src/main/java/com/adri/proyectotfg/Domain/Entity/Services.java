@@ -27,7 +27,7 @@ public class Services {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "services", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PurchasedService> purchasedServices;
 }
 

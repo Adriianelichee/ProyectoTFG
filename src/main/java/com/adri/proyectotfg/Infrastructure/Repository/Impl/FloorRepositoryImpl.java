@@ -1,14 +1,13 @@
 package com.adri.proyectotfg.Infrastructure.Repository.Impl;
 
+import com.adri.proyectotfg.Domain.Entity.Floor;
+import com.adri.proyectotfg.Domain.Repository.FloorRepository;
+import com.adri.proyectotfg.Infrastructure.Repository.Jpa.FloorJpaRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 import java.util.Optional;
-
-import com.adri.proyectotfg.Domain.Entity.Floor;
-import com.adri.proyectotfg.Infrastructure.Repository.Jpa.FloorJpaRepository;
-import org.springframework.stereotype.Repository;
-import lombok.RequiredArgsConstructor;
-
-import com.adri.proyectotfg.Domain.Repository.*;
 
 @RequiredArgsConstructor
 @Repository
@@ -33,5 +32,10 @@ public class FloorRepositoryImpl implements FloorRepository {
     @Override
     public void deleteById(Integer id) {
         jpa.deleteById(id);
+    }
+
+    @Override
+    public List<Floor> getFloorsByCompanyId(Integer companyId) {
+        return jpa.findByCompanyId(companyId);
     }
 }

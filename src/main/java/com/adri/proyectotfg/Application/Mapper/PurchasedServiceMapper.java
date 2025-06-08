@@ -12,10 +12,10 @@ public interface PurchasedServiceMapper {
     PurchasedServiceMapper INSTANCE = Mappers.getMapper(PurchasedServiceMapper.class);
 
     @Mapping(source = "companyId", target = "company.companyId")
-    @Mapping(source = "serviceId", target = "service.serviceId")
+    @Mapping(source = "serviceId", target = "services.serviceId")
     PurchasedService toEntity(PurchasedServiceInDto dto);
 
     @Mapping(source = "company.companyId", target = "companyId")
-    @Mapping(source = "service.serviceId", target = "serviceId")
+    @Mapping(source = "services.serviceId", target = "serviceId")
     PurchasedServiceOutDto toDto(PurchasedService entity);
 }

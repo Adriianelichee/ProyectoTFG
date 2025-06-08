@@ -42,4 +42,9 @@ public class FloorController {
         service.deleteFloor(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/company/{companyId}")
+    public ResponseEntity<List<FloorOutDto>> getByCompany(@PathVariable Integer companyId) {
+        return ResponseEntity.ok(service.getFloorsByCompanyId(companyId));
+    }
 }

@@ -6,6 +6,7 @@ import com.adri.proyectotfg.Infrastructure.Repository.Jpa.DetailReservationWorks
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,14 @@ public class DetailReservationWorkstationRepositoryImpl implements DetailReserva
     @Override
     public void deleteById(Integer id) {
         jpa.deleteById(id);
+    }
+    @Override
+    public List<DetailReservationWorkstation> findByWorkstationWorkstationId(Integer workstationId) {
+        return jpa.findByWorkstationWorkstationId(workstationId);
+    }
+
+    @Override
+    public List<DetailReservationWorkstation> findActiveReservationDetailsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
+        return jpa.findActiveReservationDetailsBetweenDates(startDate, endDate);
     }
 }

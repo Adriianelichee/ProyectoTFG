@@ -11,4 +11,5 @@ public interface FloorService {
     List<FloorOutDto> getAllFloors();
     FloorOutDto updateFloor(Integer id, FloorInDto dto);
     void deleteFloor(Integer id);
+    List<FloorOutDto> getFloorsByCompanyId(Integer companyId);
 }

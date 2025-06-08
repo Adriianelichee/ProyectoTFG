@@ -6,6 +6,7 @@ import com.adri.proyectotfg.Infrastructure.Repository.Jpa.DetailReservationRoomJ
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,20 @@ public class DetailReservationRoomRepositoryImpl implements DetailReservationRoo
     @Override
     public void deleteById(Integer id) {
         jpa.deleteById(id);
+    }
+
+    @Override
+    public List<DetailReservationRoom> findActiveReservationDetails(LocalDateTime now) {
+        return jpa.findActiveReservationDetails(now);
+    }
+
+    @Override
+    public List<DetailReservationRoom> findActiveReservationDetailsByRoom(Integer roomId, LocalDateTime now) {
+        return jpa.findActiveReservationDetailsByRoom(roomId, now);
+    }
+
+    @Override
+    public List<DetailReservationRoom> findActiveReservationDetailsBetweenDates(LocalDateTime start, LocalDateTime end) {
+        return jpa.findActiveReservationDetailsBetweenDates(start, end);
     }
 }

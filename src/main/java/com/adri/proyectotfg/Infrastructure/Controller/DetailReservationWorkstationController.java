@@ -5,9 +5,11 @@ import com.adri.proyectotfg.Infrastructure.Dto.In.DetailReservationWorkstationIn
 import com.adri.proyectotfg.Infrastructure.Dto.Out.DetailReservationWorkstationOutDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -41,5 +43,17 @@ public class DetailReservationWorkstationController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.deleteDetail(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/workstation/{workstationId}")
+    public ResponseEntity<List<DetailReservationWorkstationOutDto>> getByWorkstation(@PathVariable Integer workstationId) {
+        return ResponseEntity.ok(service.getDetailsByWorkstation(workstationId));
+    }
+
+    @GetMapping("/occupied")
+    public ResponseEntity<List<DetailReservationWorkstationOutDto>> getOccupiedBetweenDates(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        return ResponseEntity.ok(service.getOccupiedWorkstationDetailsBetweenDates(startDate, endDate));
     }
 }

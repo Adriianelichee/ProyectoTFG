@@ -49,4 +49,12 @@ public class FloorServiceImpl implements FloorService {
     public void deleteFloor(Integer id) {
         floorRepository.deleteById(id);
     }
+
+    @Override
+    public List<FloorOutDto> getFloorsByCompanyId(Integer companyId) {
+        List<Floor> floors = floorRepository.getFloorsByCompanyId(companyId);
+        return floors.stream()
+                .map(floorMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }

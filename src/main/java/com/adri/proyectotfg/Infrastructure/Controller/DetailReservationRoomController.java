@@ -5,9 +5,11 @@ import com.adri.proyectotfg.Infrastructure.Dto.In.DetailReservationRoomInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.DetailReservationRoomOutDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -41,5 +43,22 @@ public class DetailReservationRoomController {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.deleteDetail(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/occupied")
+    public ResponseEntity<List<DetailReservationRoomOutDto>> getOccupiedRoomDetails() {
+        return ResponseEntity.ok(service.getOccupiedRoomDetails());
+    }
+
+    @GetMapping("/occupied/room/{roomId}")
+    public ResponseEntity<List<DetailReservationRoomOutDto>> getOccupiedRoomDetailsByRoom(@PathVariable Integer roomId) {
+        return ResponseEntity.ok(service.getOccupiedRoomDetailsByRoom(roomId));
+    }
+
+    @GetMapping("/occupied/date-range")
+    public ResponseEntity<List<DetailReservationRoomOutDto>> getOccupiedRoomDetailsBetweenDates(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+        return ResponseEntity.ok(service.getOccupiedRoomDetailsBetweenDates(start, end));
     }
 }

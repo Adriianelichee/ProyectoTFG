@@ -2,12 +2,15 @@ package com.adri.proyectotfg.Application.Service.Impl;
 
 import com.adri.proyectotfg.Application.Mapper.UserMapper;
 import com.adri.proyectotfg.Application.Service.UserService;
+import com.adri.proyectotfg.Domain.Entity.ReportProvider;
 import com.adri.proyectotfg.Domain.Entity.User;
+import com.adri.proyectotfg.Domain.Repository.ReportProviderRepository;
 import com.adri.proyectotfg.Domain.Repository.UserRepository;
 import com.adri.proyectotfg.Infrastructure.Dto.In.UserInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.UserOutDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,12 +19,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final ReportProviderRepository reportProviderRepository;
     private final UserMapper userMapper;
 
     @Override
-    public UserOutDto createUser(UserInDto dto) {
-        User user = userMapper.toEntity(dto);
-        return userMapper.toDto(userRepository.save(user));
+    @Transactional
+    public UserOutDto createUser(UserInDto userInDto) {
+        User user = userMapper.toEntity(userInDto);
+
+        if (user.getProvider() != null) {
+            ReportProvider provider = user.getProvider();
+            if (provider.getContactEmail() == null || provider.getPhone() == null ||
+                    provider.getProviderName() == null || provider.getSpecialty() == null) {
+                user.setProvider(null);
+            } else {
+                ReportProvider savedProvider = reportProviderRepository.save(provider);
+                user.setProvider(savedProvider);
+            }
+        }
+
+        User savedUser = userRepository.save(user);
+        return userMapper.toDto(savedUser);
     }
 
     @Override
