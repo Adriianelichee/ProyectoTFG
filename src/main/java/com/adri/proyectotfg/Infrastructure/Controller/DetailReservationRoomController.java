@@ -39,6 +39,11 @@ public class DetailReservationRoomController {
         return ResponseEntity.ok(service.updateDetail(id, dto));
     }
 
+    @GetMapping("/reservation/{reservationId}")
+    public ResponseEntity<DetailReservationRoomOutDto> getByReservationId(@PathVariable Integer reservationId) {
+        return ResponseEntity.ok(service.getDetailByReservationId(reservationId));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.deleteDetail(id);

@@ -6,9 +6,11 @@ import com.adri.proyectotfg.Domain.Entity.ReportProvider;
 import com.adri.proyectotfg.Domain.Entity.User;
 import com.adri.proyectotfg.Domain.Repository.ReportProviderRepository;
 import com.adri.proyectotfg.Domain.Repository.UserRepository;
+import com.adri.proyectotfg.Exception.EmailAlreadyExistsException;
 import com.adri.proyectotfg.Infrastructure.Dto.In.UserInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.UserOutDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +23,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ReportProviderRepository reportProviderRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public UserOutDto createUser(UserInDto userInDto) {
+        // Verificar si el email ya existe
+        if (userRepository.findByEmail(userInDto.getEmail()).isPresent()) {
+            throw new EmailAlreadyExistsException("El email " + userInDto.getEmail() + " ya está registrado");
+        }
+
         User user = userMapper.toEntity(userInDto);
 
         if (user.getProvider() != null) {
@@ -56,11 +64,51 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-    @Override
+   @Override
+    @Transactional
     public UserOutDto updateUser(Integer id, UserInDto dto) {
-        User user = userMapper.toEntity(dto);
-        user.setUserId(id);
-        return userMapper.toDto(userRepository.save(user));
+        // Buscar el usuario existente
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + id));
+
+        // Verificar si el email ya existe y pertenece a otro usuario
+        if (!dto.getEmail().equals(existingUser.getEmail())) {
+            userRepository.findByEmail(dto.getEmail())
+                .ifPresent(user -> {
+                    if (!user.getUserId().equals(id)) {
+                        throw new EmailAlreadyExistsException("El email " + dto.getEmail() + " ya está registrado por otro usuario");
+                    }
+                });
+        }
+
+        // Actualizar campos básicos
+        existingUser.setFirstName(dto.getFirstName());
+        existingUser.setLastName(dto.getLastName());
+        existingUser.setEmail(dto.getEmail());
+        existingUser.setPhone(dto.getPhone());
+
+        // Solo actualizar la contraseña si no es "NO_CHANGE"
+        if (dto.getPassword() != null && !dto.getPassword().equals("NO_CHANGE")) {
+            // Encriptar la contraseña antes de guardarla
+            existingUser.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+
+        // Resto del código sin cambios...
+        existingUser.getCompany().setCompanyId(dto.getCompanyId());
+
+        if (dto.getProviderId() != null) {
+            if (existingUser.getProvider() == null ||
+                    !existingUser.getProvider().getProviderId().equals(dto.getProviderId())) {
+                ReportProvider provider = reportProviderRepository.findById(dto.getProviderId())
+                        .orElseThrow(() -> new RuntimeException("Proveedor no encontrado: " + dto.getProviderId()));
+                existingUser.setProvider(provider);
+            }
+        } else {
+            existingUser.setProvider(null);
+        }
+
+        User savedUser = userRepository.save(existingUser);
+        return userMapper.toDto(savedUser);
     }
 
     @Override

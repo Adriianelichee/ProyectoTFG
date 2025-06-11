@@ -15,5 +15,5 @@ public interface DetailReservationRoomRepository {
     List<DetailReservationRoom> findActiveReservationDetails(LocalDateTime now);
     List<DetailReservationRoom> findActiveReservationDetailsByRoom(Integer roomId, LocalDateTime now);
     List<DetailReservationRoom> findActiveReservationDetailsBetweenDates(LocalDateTime start, LocalDateTime end);
-
+    DetailReservationRoom findByReservationId(Integer reservationId);
 }

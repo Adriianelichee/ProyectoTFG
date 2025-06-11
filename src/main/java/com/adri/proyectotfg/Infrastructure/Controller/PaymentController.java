@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -47,4 +48,14 @@ public class PaymentController {
         service.deletePayment(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<PaymentOutDto> updateStatus(@PathVariable Integer id, @RequestBody Map<String, String> statusMap) {
+        String newStatus = statusMap.get("status");
+        if (newStatus == null) {
+            throw new IllegalArgumentException("El campo 'status' es requerido");
+        }
+        return ResponseEntity.ok(service.updatePaymentStatus(id, newStatus));
+    }
+
 }

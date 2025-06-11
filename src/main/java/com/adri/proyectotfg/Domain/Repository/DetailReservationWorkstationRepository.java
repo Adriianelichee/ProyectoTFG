@@ -20,4 +20,5 @@ public interface DetailReservationWorkstationRepository {
 
     List<DetailReservationWorkstation> findByWorkstationWorkstationId(Integer workstationId);
 
+    DetailReservationWorkstation findByReservationReservationId(Integer reservationId);
 }

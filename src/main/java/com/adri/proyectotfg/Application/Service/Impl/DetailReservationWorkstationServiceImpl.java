@@ -51,6 +51,7 @@ public class DetailReservationWorkstationServiceImpl implements DetailReservatio
         repository.deleteById(id);
     }
 
+
     @Override
     public List<DetailReservationWorkstationOutDto> getDetailsByWorkstation(Integer workstationId) {
         return repository.findByWorkstationWorkstationId(workstationId).stream()
@@ -64,5 +65,14 @@ public class DetailReservationWorkstationServiceImpl implements DetailReservatio
                 .map(mapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+public DetailReservationWorkstationOutDto getDetailsByReservation(Integer reservationId) {
+    DetailReservationWorkstation detail = repository.findByReservationReservationId(reservationId);
+    if (detail == null) {
+        throw new RuntimeException("Detail not found for reservation: " + reservationId);
+    }
+    return mapper.toDto(detail);
+}
 
 }

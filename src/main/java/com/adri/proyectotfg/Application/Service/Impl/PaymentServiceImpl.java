@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Application.Service.Impl;
 import com.adri.proyectotfg.Application.Mapper.PaymentMapper;
 import com.adri.proyectotfg.Application.Service.PaymentService;
 import com.adri.proyectotfg.Domain.Entity.Payment;
+import com.adri.proyectotfg.Domain.Entity.PaymentStatus;
 import com.adri.proyectotfg.Domain.Repository.PaymentRepository;
 import com.adri.proyectotfg.Infrastructure.Dto.In.PaymentInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.PaymentOutDto;
@@ -22,6 +23,20 @@ public class PaymentServiceImpl implements PaymentService {
     public PaymentOutDto createPayment(PaymentInDto dto) {
         Payment p = mapper.toEntity(dto);
         return mapper.toDto(repository.save(p));
+    }
+
+    @Override
+    public PaymentOutDto updatePaymentStatus(Integer id, String newStatus) {
+        Payment payment = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pago no encontrado con id: " + id));
+
+        try {
+            PaymentStatus status = PaymentStatus.valueOf(newStatus.toLowerCase());
+            payment.setPaymentStatus(PaymentStatus.valueOf(status.name()));
+            return mapper.toDto(repository.save(payment));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado de pago no válido: " + newStatus);
+        }
     }
 
     @Override

@@ -49,4 +49,11 @@ public class DetailReservationRoomRepositoryImpl implements DetailReservationRoo
     public List<DetailReservationRoom> findActiveReservationDetailsBetweenDates(LocalDateTime start, LocalDateTime end) {
         return jpa.findActiveReservationDetailsBetweenDates(start, end);
     }
+
+    @Override
+    public DetailReservationRoom findByReservationId(Integer reservationId) {
+        return jpa.findByReservationId(reservationId);
+    }
+
+
 }

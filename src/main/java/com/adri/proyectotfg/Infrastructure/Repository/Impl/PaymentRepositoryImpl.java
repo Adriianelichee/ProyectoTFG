@@ -1,6 +1,7 @@
 package com.adri.proyectotfg.Infrastructure.Repository.Impl;
 
 import com.adri.proyectotfg.Domain.Entity.Payment;
+import com.adri.proyectotfg.Domain.Entity.PaymentStatus;
 import com.adri.proyectotfg.Domain.Repository.PaymentRepository;
 import com.adri.proyectotfg.Infrastructure.Repository.Jpa.PaymentJpaRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,4 +39,13 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     public List<Payment> findByCompanyId(Integer companyId) {
         return jpa.findByCompanyCompanyId(companyId);
     }
+
+    @Override
+    public Payment updateStatus(Integer paymentId, PaymentStatus newStatus) {
+        Payment payment = jpa.findById(paymentId)
+                .orElseThrow(() -> new RuntimeException("Pago no encontrado con id: " + paymentId));
+        payment.setPaymentStatus(newStatus);
+        return jpa.save(payment);
+    }
+
 }

@@ -18,4 +18,7 @@ public interface DetailReservationWorkstationJpaRepository extends JpaRepository
     List<DetailReservationWorkstation> findActiveReservationDetailsBetweenDates(
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate);
+
+    @Query("SELECT d FROM DetailReservationWorkstation d WHERE d.reservation.reservationId = :reservationId")
+    DetailReservationWorkstation findByReservationReservationId(@Param("reservationId") Integer reservationId);
 }

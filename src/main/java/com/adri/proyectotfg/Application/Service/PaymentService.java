@@ -14,4 +14,5 @@ public interface PaymentService {
     List<PaymentOutDto> getPaymentsByCompany(Integer companyId);
     PaymentOutDto updatePayment(Integer id, PaymentInDto dto);
     void deletePayment(Integer id);
+    PaymentOutDto updatePaymentStatus(Integer id, String newStatus);
 }

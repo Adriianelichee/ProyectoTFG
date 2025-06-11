@@ -8,11 +8,18 @@ import java.util.List;
 
 public interface DetailReservationWorkstationService {
     DetailReservationWorkstationOutDto createDetail(DetailReservationWorkstationInDto dto);
+
     DetailReservationWorkstationOutDto getDetailById(Integer id);
+
     List<DetailReservationWorkstationOutDto> getAllDetails();
+
     DetailReservationWorkstationOutDto updateDetail(Integer id, DetailReservationWorkstationInDto dto);
+
     void deleteDetail(Integer id);
+
     List<DetailReservationWorkstationOutDto> getDetailsByWorkstation(Integer workstationId);
+
     List<DetailReservationWorkstationOutDto> getOccupiedWorkstationDetailsBetweenDates(LocalDateTime start, LocalDateTime end);
 
+    DetailReservationWorkstationOutDto getDetailsByReservation(Integer reservationId);
 }

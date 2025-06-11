@@ -15,5 +15,5 @@ public interface DetailReservationRoomService {
     List<DetailReservationRoomOutDto> getOccupiedRoomDetails();
     List<DetailReservationRoomOutDto> getOccupiedRoomDetailsByRoom(Integer roomId);
     List<DetailReservationRoomOutDto> getOccupiedRoomDetailsBetweenDates(LocalDateTime start, LocalDateTime end);
-
+    DetailReservationRoomOutDto getDetailByReservationId(Integer id);
 }

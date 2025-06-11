@@ -43,4 +43,9 @@ public class DetailReservationWorkstationRepositoryImpl implements DetailReserva
     public List<DetailReservationWorkstation> findActiveReservationDetailsBetweenDates(LocalDateTime startDate, LocalDateTime endDate) {
         return jpa.findActiveReservationDetailsBetweenDates(startDate, endDate);
     }
+
+    @Override
+    public DetailReservationWorkstation findByReservationReservationId(Integer reservationId) {
+        return jpa.findByReservationReservationId(reservationId);
+    }
 }

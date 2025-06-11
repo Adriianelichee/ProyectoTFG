@@ -35,4 +35,9 @@ public interface DetailReservationRoomJpaRepository extends JpaRepository<Detail
     List<DetailReservationRoom> findActiveReservationDetailsBetweenDates(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end);
+
+    @Query("SELECT d FROM DetailReservationRoom d WHERE d.reservation.reservationId = :reservationId")
+    DetailReservationRoom findByReservationId(@Param("reservationId") Integer reservationId);
+
+
 }

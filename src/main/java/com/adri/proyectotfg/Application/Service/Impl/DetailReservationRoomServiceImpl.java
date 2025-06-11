@@ -26,6 +26,15 @@ public class DetailReservationRoomServiceImpl implements DetailReservationRoomSe
     }
 
     @Override
+    public DetailReservationRoomOutDto getDetailByReservationId(Integer id) {
+        DetailReservationRoom detail = repository.findByReservationId(id);
+        if (detail == null) {
+            throw new RuntimeException("Detalle de reserva no encontrado para la reserva: " + id);
+        }
+        return mapper.toDto(detail);
+    }
+
+    @Override
     public DetailReservationRoomOutDto getDetailById(Integer id) {
         DetailReservationRoom d = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Detail not found: " + id));

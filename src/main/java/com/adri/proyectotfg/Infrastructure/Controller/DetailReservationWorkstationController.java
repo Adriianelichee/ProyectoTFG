@@ -56,4 +56,9 @@ public class DetailReservationWorkstationController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
         return ResponseEntity.ok(service.getOccupiedWorkstationDetailsBetweenDates(startDate, endDate));
     }
+
+    @GetMapping("/reservation/{reservationId}")
+    public ResponseEntity<DetailReservationWorkstationOutDto> getByReservation(@PathVariable Integer reservationId) {
+        return ResponseEntity.ok(service.getDetailsByReservation(reservationId));
+    }
 }
