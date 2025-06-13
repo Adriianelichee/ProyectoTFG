@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -37,8 +38,20 @@ public class ReportController {
         return ResponseEntity.ok(service.getReportById(id));
     }
 
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<ReportOutDto> updateStatus(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> statusMap) {
+
+        String newStatus = statusMap.get("status");
+        if (newStatus == null) {
+            throw new IllegalArgumentException("El campo 'status' es requerido");
+        }
+        return ResponseEntity.ok(service.updateReportStatus(id, newStatus));
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<ReportOutDto> update(@PathVariable Integer id,@Valid @RequestBody ReportInDto dto) {
+    public ResponseEntity<ReportOutDto> update(@PathVariable Integer id, @Valid @RequestBody ReportInDto dto) {
         return ResponseEntity.ok(service.updateReport(id, dto));
     }
 
@@ -47,4 +60,10 @@ public class ReportController {
         service.deleteReport(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReportOutDto>> getByUserId(@PathVariable Integer userId) {
+        return ResponseEntity.ok(service.getReportsByUserId(userId));
+    }
+
 }

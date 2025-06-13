@@ -3,6 +3,7 @@ package com.adri.proyectotfg.Application.Service.Impl;
 import com.adri.proyectotfg.Application.Mapper.ReportMapper;
 import com.adri.proyectotfg.Application.Service.ReportService;
 import com.adri.proyectotfg.Domain.Entity.Report;
+import com.adri.proyectotfg.Domain.Entity.ReportStatus;
 import com.adri.proyectotfg.Domain.Repository.ReportRepository;
 import com.adri.proyectotfg.Infrastructure.Dto.In.ReportInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.ReportOutDto;
@@ -32,6 +33,20 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
+    public ReportOutDto updateReportStatus(Integer id, String status) {
+        Report report = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado con id: " + id));
+
+        try {
+            ReportStatus reportStatus = ReportStatus.valueOf(status);
+            report.setStatus(reportStatus);
+            return mapper.toDto(repository.save(report));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado de reporte no válido: " + status);
+        }
+    }
+
+    @Override
     public List<ReportOutDto> getAllReports() {
         return repository.findAll().stream()
                 .map(mapper::toDto)
@@ -56,4 +71,12 @@ public class ReportServiceImpl implements ReportService {
     public void deleteReport(Integer id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public List<ReportOutDto> getReportsByUserId(Integer userId) {
+        return repository.findByUserId(userId).stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -1,10 +1,8 @@
 package com.adri.proyectotfg.Infrastructure.Repository.Impl;
 
-import com.adri.proyectotfg.Domain.Entity.PurchasedService;
 import com.adri.proyectotfg.Domain.Entity.Report;
-import com.adri.proyectotfg.Domain.Repository.PurchasedServiceRepository;
+import com.adri.proyectotfg.Domain.Entity.ReportStatus;
 import com.adri.proyectotfg.Domain.Repository.ReportRepository;
-import com.adri.proyectotfg.Infrastructure.Repository.Jpa.PurchasedServiceJpaRepository;
 import com.adri.proyectotfg.Infrastructure.Repository.Jpa.ReportJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -41,4 +39,19 @@ public class ReportRepositoryImpl implements ReportRepository {
     public List<Report> findByFloorId(Integer floorId) {
         return jpa.findByFloorFloorId(floorId);
     }
+
+    @Override
+    public Report updateStatus(Integer reportId, ReportStatus status) {
+        Report report = jpa.findById(reportId)
+                .orElseThrow(() -> new RuntimeException("Reporte no encontrado con id: " + reportId));
+        report.setStatus(status);
+        return jpa.save(report);
+    }
+
+    @Override
+    public List<Report> findByUserId(Integer userId) {
+        return jpa.findByUserUserId(userId);
+    }
+
+
 }

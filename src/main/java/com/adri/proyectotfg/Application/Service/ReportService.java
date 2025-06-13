@@ -9,9 +9,18 @@ import java.util.List;
 
 public interface ReportService {
     ReportOutDto createReport(ReportInDto dto);
+
     ReportOutDto getReportById(Integer id);
+
     List<ReportOutDto> getAllReports();
+
     List<ReportOutDto> getReportsByFloor(Integer floorId);
+
     ReportOutDto updateReport(Integer id, ReportInDto dto);
+
     void deleteReport(Integer id);
+
+    ReportOutDto updateReportStatus(Integer id, String status);
+
+    List<ReportOutDto> getReportsByUserId(Integer userId);
 }
