@@ -1,16 +1,10 @@
 package com.adri.proyectotfg.Application.Service.Impl;
 
-import com.adri.proyectotfg.Application.Mapper.UserMapper;
 import com.adri.proyectotfg.Application.Mapper.WorkstationMapper;
-import com.adri.proyectotfg.Application.Service.UserService;
 import com.adri.proyectotfg.Application.Service.WorkstationService;
-import com.adri.proyectotfg.Domain.Entity.User;
 import com.adri.proyectotfg.Domain.Entity.Workstation;
-import com.adri.proyectotfg.Domain.Repository.UserRepository;
 import com.adri.proyectotfg.Domain.Repository.WorkstationRepository;
-import com.adri.proyectotfg.Infrastructure.Dto.In.UserInDto;
 import com.adri.proyectotfg.Infrastructure.Dto.In.WorkstationInDto;
-import com.adri.proyectotfg.Infrastructure.Dto.Out.UserOutDto;
 import com.adri.proyectotfg.Infrastructure.Dto.Out.WorkstationOutDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

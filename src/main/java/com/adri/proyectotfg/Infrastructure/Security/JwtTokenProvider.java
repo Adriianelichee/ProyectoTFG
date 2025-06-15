@@ -44,7 +44,6 @@ public class JwtTokenProvider {
                 .map(authority -> authority.getAuthority().replace("ROLE_", ""))
                 .orElse("");
 
-        // Obtener el ID del usuario desde el repositorio
         User user = getUserFromUsername(userPrincipal.getUsername());
         Integer userId = user.getUserId();
         Integer companyId = user.getCompany() != null ? user.getCompany().getCompanyId() : null;

@@ -19,6 +19,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * Controlador que gestiona las operaciones de autenticación de usuarios.
+ * Proporciona endpoints para login, registro y restablecimiento de contraseñas.
+ */
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/auth")
@@ -30,6 +34,12 @@ public class AuthController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Autentica a un usuario y genera un token JWT.
+     *
+     * @param request objeto que contiene email y contraseña del usuario
+     * @return ResponseEntity con el token JWT generado
+     */
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginRequest request) {
         Authentication auth = authManager.authenticate(
@@ -39,6 +49,13 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token));
     }
 
+    /**
+     * Restablece la contraseña de un usuario existente.
+     *
+     * @param email       email del usuario cuya contraseña se restablecerá
+     * @param newPassword nueva contraseña para el usuario
+     * @return ResponseEntity con mensaje de éxito o error
+     */
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam String email, @RequestParam String newPassword) {
         try {
@@ -63,6 +80,12 @@ public class AuthController {
         }
     }
 
+    /**
+     * Registra un nuevo usuario en el sistema.
+     *
+     * @param dto datos del usuario a registrar
+     * @return ResponseEntity con los datos del usuario creado
+     */
     @PostMapping("/register")
     public ResponseEntity<UserOutDto> register(@Valid @RequestBody UserInDto dto) {
         dto.setPassword(passwordEncoder.encode(dto.getPassword()));
